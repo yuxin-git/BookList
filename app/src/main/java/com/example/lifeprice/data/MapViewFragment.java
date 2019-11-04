@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,9 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.lifeprice.R;
+import com.example.lifeprice.data.model.Shop;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +60,7 @@ public class MapViewFragment extends Fragment {
         Marker maker=(Marker)baiduMap.addOverlay(markerOptions);
 
         //添加文字
-        OverlayOptions textOption=new TextOptions().bgColor(0xFF00FF).fontSize(50).fontColor(0XFF0000)
+        OverlayOptions textOption=new TextOptions().bgColor(0xAAFFFF00).fontSize(50).fontColor(0XFFFF00FF)
                 .text("暨南大学珠海校区").rotate(0).position(centerPoint);
         baiduMap.addOverlay(textOption);
 
@@ -67,9 +72,34 @@ public class MapViewFragment extends Fragment {
                 return false;
             }
         });
+        final ShopLoader shopLoader=new ShopLoader();
+        Handler handler=new Handler(){
+            public void handleMessage(Message msg){
+                drawShops(shopLoader.getShops());
+            };
+        };
+        shopLoader.load(handler,"http://file.nidama.net/class/mobile_develop/data/bookstore.json");
+
         return view;
     }
 
+    void drawShops(ArrayList<Shop>shops)
+    {
+        if(mapView==null)
+            return;
+        BaiduMap baiduMap = mapView.getMap();
+        for(int i=0;i<shops.size();i++){
+            Shop shop=shops.get(i);
+            LatLng point=new LatLng(shop.getLatitude(),shop.getLongitude());
+            BitmapDescriptor bitmapDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon);
+            MarkerOptions markerOptions=new MarkerOptions().icon(bitmapDescriptor).position(point);
+            Marker maker=(Marker)baiduMap.addOverlay(markerOptions);
+
+            OverlayOptions textOption=new TextOptions().bgColor(0xAAFFFF00).fontSize(50).fontColor(0XFFFF00FF)
+                    .text(shop.getName()).rotate(0).position(point);
+            baiduMap.addOverlay(textOption);
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();
