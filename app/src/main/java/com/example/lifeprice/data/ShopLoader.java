@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class ShopLoader {
+    private static final int RESPONSE_CODE_OK = 200;
+
     public ArrayList<Shop> getShops() {
         return shops;
     }
@@ -26,7 +28,7 @@ public class ShopLoader {
 
     public String download(String urlString)
     {
-        try {
+        try{
             // 调用URL对象的openConnection方法获取HttpURLConnection的实例
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -35,9 +37,8 @@ public class ShopLoader {
             // 设置连接超时、读取超时的时间，单位为毫秒（ms）
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
-            // 设置是否使用缓存  默认是true
+            // 设置是否使用缓存
             connection.setUseCaches(false);
-            //设置请求头里面的属性
 
             // 开始连接
             Log.i("HttpURLConnection.GET","开始连接");
@@ -45,21 +46,24 @@ public class ShopLoader {
 
             //获取数据
             InputStream inputStream = connection.getInputStream();
+            //字节流转字符流
+            InputStreamReader inputStreamReader=new InputStreamReader(inputStream);
             //使用BufferedReader对象读取返回的数据流
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
-            if (connection.getResponseCode() == 200) {
+            BufferedReader buffer = new BufferedReader(inputStreamReader);
+            if (connection.getResponseCode() == RESPONSE_CODE_OK) {
                 Log.i("HttpURLConnection.GET", "请求成功");
-                // 按行读取，存储在StringBuider对象response中
+
+                // 按行读取，存储在StringBuffer对象resultData中
                 String line;
                 StringBuffer resultData=new StringBuffer();
-
                 while ((line = buffer.readLine()) != null) {
                     resultData.append(line);
                 }
                 String text=resultData.toString();
-                Log.v("out: ",text);
+
                 return(text);
-            }else{
+            }
+            else{
                 Log.i("HttpURLConnection.GET", "请求失败");
             }
         } catch (Exception e){
@@ -67,13 +71,13 @@ public class ShopLoader {
         }
         return "";
     }
+
     public void parseJson(String text)
     {
         try{
             JSONObject jsonObject=new JSONObject(text);
             JSONArray jsonDatas=jsonObject.getJSONArray("shops");
             int length=jsonDatas.length();
-            String test;
             for(int i=0;i<length;i++){
                 JSONObject shopJson=jsonDatas.getJSONObject(i);
                 Shop shop=new Shop();

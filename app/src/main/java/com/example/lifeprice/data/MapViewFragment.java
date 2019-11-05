@@ -53,7 +53,7 @@ public class MapViewFragment extends Fragment {
         MapStatus mapStatus=new MapStatus.Builder().target(centerPoint).zoom(17).build();
         MapStatusUpdate mapStatusUpdate= MapStatusUpdateFactory.newMapStatus(mapStatus);
         baiduMap.setMapStatus(mapStatusUpdate);
-
+/*
         //在地图中心添加标记点
         BitmapDescriptor bitmapDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon);
         MarkerOptions markerOptions=new MarkerOptions().icon(bitmapDescriptor).position(centerPoint);
@@ -63,7 +63,7 @@ public class MapViewFragment extends Fragment {
         OverlayOptions textOption=new TextOptions().bgColor(0xAAFFFF00).fontSize(50).fontColor(0XFFFF00FF)
                 .text("暨南大学珠海校区").rotate(0).position(centerPoint);
         baiduMap.addOverlay(textOption);
-
+*/
         //响应事件
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
@@ -75,7 +75,8 @@ public class MapViewFragment extends Fragment {
         final ShopLoader shopLoader=new ShopLoader();
         Handler handler=new Handler(){
             public void handleMessage(Message msg){
-                drawShops(shopLoader.getShops());
+                if(msg.what==1)
+                    drawShops(shopLoader.getShops());
             };
         };
         shopLoader.load(handler,"http://file.nidama.net/class/mobile_develop/data/bookstore.json");
