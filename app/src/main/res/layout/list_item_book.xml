@@ -6,10 +6,9 @@
 
     <ImageView
         android:id="@+id/image_view_book"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_width="26dp"
+        android:layout_height="101dp"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/text_view_name"

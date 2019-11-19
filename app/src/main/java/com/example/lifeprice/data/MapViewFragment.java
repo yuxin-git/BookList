@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.TextOptions;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.example.lifeprice.R;
 import com.example.lifeprice.data.model.Shop;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
  */
 public class MapViewFragment extends Fragment {
 
-    private MapView mapView=null;
+    private TextureMapView mapView=null;
     public MapViewFragment() {
         // Required empty public constructor
     }

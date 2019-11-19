@@ -3,12 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".data.MapViewFragment">
+    tools:context=".data.GameFragment">
 
-    <com.baidu.mapapi.map.TextureMapView
-        android:id="@+id/bmap_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"/>
 
 </FrameLayout>

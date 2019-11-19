@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.lifeprice.data.BookFragmentAdapter;
 import com.example.lifeprice.data.BookListFragment;
 import com.example.lifeprice.data.BookSource;
+import com.example.lifeprice.data.GameFragment;
 import com.example.lifeprice.data.MapViewFragment;
 import com.example.lifeprice.data.WebViewFragment;
 import com.example.lifeprice.data.model.Book;
@@ -67,12 +68,14 @@ public class BookListMainActivity extends AppCompatActivity {
         datas.add(new BookListFragment(theAdaper));
         datas.add(new WebViewFragment());
         datas.add(new MapViewFragment());
+        datas.add(new GameFragment());
         myPageAdapter.setData(datas);
 
         ArrayList<String> titles = new ArrayList<String>();
         titles.add("图书");
         titles.add("新闻");
         titles.add("卖家");
+        titles.add("游戏");
         myPageAdapter.setTitles(titles);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
